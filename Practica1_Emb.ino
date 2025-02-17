@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
+//Inicializando variables
 const byte ROWS = 4;
 const byte COLS = 4;
 char key[ROWS][COLS] = {
@@ -23,7 +24,7 @@ int iKey;
 
 int acceleration, hold, deceleration;
 
-void getOptions();
+void getOptions(); //función para obtener los valores de la aceleracion, el mantenimiento y la desaceleracion del motor CD
 
 void setup() {
   // put your setup code here, to run once:
@@ -42,7 +43,7 @@ void loop() {
 
   lcd.clear();
   lcd.print("Aceleracion");
-  timeAce = ((float)acceleration / (float)255) * 1000;
+  timeAce = ((float)acceleration / (float)255) * 1000; //obtenemos el tiempo que deben tener los delay para que en total, la suma de 255 este tiempo de el tiempo deseado de aceleracion
   while (i < 255) {
     lcd.setCursor(0, 1);
     lcd.print(i);
@@ -53,11 +54,11 @@ void loop() {
 
   lcd.clear();
   lcd.print("Mantenimiento");
-  delay(hold*1000);
+  delay(hold*1000); //tiempo de mantenimiento
 
   lcd.clear();
   lcd.print("Desaceleracion");
-  timeDes = ((float)deceleration / (float)255) * 1000;
+  timeDes = ((float)deceleration / (float)255) * 1000; //obtenemos el tiempo que deben tener los delay para que en total, la suma de 255 este tiempo de el tiempo deseado de desaceleracion
   while (i > 1) {
     lcd.setCursor(0, 1);
     lcd.print("   ");
@@ -76,7 +77,7 @@ void getOptions () {
   do{
     // kpd.waitForKey();
     pressKey = kpd.getKey();
-    acceleration = pressKey - 48;
+    acceleration = pressKey - 48; //restamos 48 para obtener el valor entero usando ASCII
   }while(acceleration < 4 || acceleration > 10);
   lcd.print(acceleration);
   delay(1000);
